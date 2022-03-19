@@ -1,19 +1,19 @@
 <template>
-	<div class="monster_card">
+	<li class="monster_card">
 		<div class="picture_container" v-html="svg_picture"></div>
-		<div class="monster_details">
-			<h3 class="name">{{ monster_name }}</h3>
+		<div class="details_container">
+			<h3 class="name">{{ name }}</h3>
 		</div>
-	</div>
+	</li>
 </template>
 
 <script>
-	import {get_random_monster_svg} from '../services/api/controllers/pixel_enconter_controllers.js'
+	import {get_random_monster_svg} from '../services/api/controllers/monsters_controllers.js'
 	
 	export default {
 		name: 'MonsterCard',
 		props: {
-			monster_name: String
+			name: { type: String, required: true }
 		},
 		data(){
 			return {
@@ -34,20 +34,24 @@
 <style scoped>
 	.monster_card
 	{
-		width: 25vw;
+		width: 25%;
 		height: 25vw;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		position: relative;
 	}
 
-	.picture
+	.picture_container
 	{
 		height: 75%;
 	}
 
-	.monster_details
+	>>> svg
+	{
+		height: 100%;
+	}
+
+	.details_container
 	{
 		width: 100%;
 		height: 25%;

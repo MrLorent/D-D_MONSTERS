@@ -1,19 +1,32 @@
 <template>
-  <MonsterCard monster_name="Patrick le Dragon"/>
+  <MonstersList/>
 </template>
 
 <script>
-import MonsterCard from './components/MonsterCard.vue'
+import MonstersList from './components/MonstersList.vue'
 
 export default {
   name: 'App',
   components: {
-    MonsterCard
+    MonstersList
   }
 }
 </script>
 
 <style>
+  :root {
+    /* COLORS */
+    --black: #000000;
+    --dark-grey: #121212;
+    --white: #ffffff;
+
+    /* HEADER */
+    --header-height: 8vh;
+
+    /* FOOTER */
+    --footer-height: 6vh;
+  }
+
   html,
   body {
     width: 100%;
@@ -25,8 +38,7 @@ export default {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    width: 100%;
+    height: 100%;
   }
 </style>

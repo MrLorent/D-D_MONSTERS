@@ -1,4 +1,4 @@
-import {get_random_monster} from '../models/pixel_encounter_models';
+import {get_random_monster} from '../models/monsters_models';
 
 export async function get_random_monster_svg() {
   const raw_response = await get_random_monster();
