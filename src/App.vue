@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style>
+  /*------------ GLOBALS -------------*/
   :root {
     /* COLORS */
     --black: #000000;
@@ -27,6 +28,7 @@ export default {
     --footer-height: 6vh;
   }
 
+  /*------------ GENERAL -------------*/
   html,
   body {
     width: 100%;

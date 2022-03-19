@@ -1,19 +1,34 @@
 <template>
 	<ul id="monsters_list">
-        <MonsterCard name="Patrick le Dragon"/>
-        <MonsterCard name="Patrick le Dragon"/>
-        <MonsterCard name="Patrick le Dragon"/>
-        <MonsterCard name="Patrick le Dragon"/>
+        <MonsterCard
+            v-for="monster in monsters_data"
+            :key="monster.id"
+            :name="monster.name"/>
     </ul>
 </template>
 
 <script>
-    import MonsterCard from './MonsterCard.vue'
+    import MonsterCard from './MonsterCard.vue';
+
+    import { get_monsters_data } from "../services/api/controllers/dnd_controllers.js";
 
 	export default {
 		name: 'MonstersList',
         components: {
             MonsterCard
+        },
+        data() {
+            return {
+                monsters_data: []
+            }
+        },
+        created: function() {
+            this.retrieve_monsters_data()
+        },
+        methods: {
+            async retrieve_monsters_data() {
+                this.monsters_data = await get_monsters_data();
+            }
         }
 	}
 </script>
