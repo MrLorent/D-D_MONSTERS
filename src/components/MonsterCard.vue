@@ -1,6 +1,6 @@
 <template>
 	<div class="monster_card">
-		<img v-bind:src="picture_url" alt="Pixel monster portrait" class="picture">
+		<div class="picture_container" v-html="svg_picture"></div>
 		<div class="monster_details">
 			<h3 class="name">{{ monster_name }}</h3>
 		</div>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import {get_random_monster_img} from '../services/api/controllers/pixel_enconter_controllers.js'
+	import {get_random_monster_svg} from '../services/api/controllers/pixel_enconter_controllers.js'
 	
 	export default {
 		name: 'MonsterCard',
@@ -17,7 +17,7 @@
 		},
 		data(){
 			return {
-				picture_url: URL
+				svg_picture: SVGElement
 			}
 		},
 		created: function(){
@@ -25,7 +25,7 @@
 		},
 		methods: {
 			async retrieve_picture_url() {
-				this.picture_url = await get_random_monster_img();
+				this.svg_picture = await get_random_monster_svg();
 			}
 		},
 	}
