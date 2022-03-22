@@ -1,5 +1,4 @@
 import {get_monsters_list} from '../models/dnd_models.js';
-import {get_monster_details} from '../models/dnd_models.js';
 
 export async function get_monsters_data() {
   const response = await get_monsters_list();
@@ -13,6 +12,8 @@ export async function get_monsters_data() {
       name: raw_response['results'][i].name,
     }
   }
+
+  console.log(monsters_data);
 
   return JSON.parse(JSON.stringify(monsters_data));
 }
