@@ -5,12 +5,6 @@
 /*---| https://www.dnd5eapi.co/graphql |---*/
 /*#########################################*/
 
-// export async function get_monsters_list() {
-//   const response = await fetch('https://www.dnd5eapi.co/api/monsters/');
-
-//   return response;
-// }
-
 export async function get_monsters_list() {
   const headers = {
     'content-type': 'application/json',
@@ -34,23 +28,12 @@ export async function get_monsters_list() {
     },
   });
 
-  // monsters {
-  //   index
-  //   name
-  //   alignment
-  //   type
-  //   size
-  //   strength
-  //   dexterity
-  //   constitution
-  //   intelligence
-  // }
-
   const params = {
     method: 'POST',
     headers: headers,
     body: graphqlQuery,
   };
+
   const response = await fetch(
       'https://www.dnd5eapi.co/graphql',
       params,
