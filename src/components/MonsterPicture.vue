@@ -1,24 +1,26 @@
 <template>
-    <div class="frame" v-html="svg_picture"></div>
+    <div class="frame" ref="frame">
+        <LoadingIcon/>
+    </div>
 </template>
 
 <script>
+    import LoadingIcon from '../assets/LoadingIcon.vue'
     import {get_random_monster_svg} from '../services/api/controllers/monsters_controllers.js';
 
     export default {
         name: 'MonsterPicture',
-        data(){
-			return {
-				svg_picture: SVGElement
+        components: {
+            LoadingIcon
+        },
+        methods: {
+			async retrieve_picture_url() {
+				const monster_svg = await get_random_monster_svg();
+                this.$refs.frame.innerHTML = monster_svg;
 			}
 		},
 		created: function(){
 			this.retrieve_picture_url();
-		},
-		methods: {
-			async retrieve_picture_url() {
-				this.svg_picture = await get_random_monster_svg();
-			}
 		},
     }
 </script>
@@ -29,7 +31,10 @@
 		width: 100%;
 		height: 100%;
         box-sizing: border-box;
-		padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+		padding: 20px;
 	}
 
 	>>> svg

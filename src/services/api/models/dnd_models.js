@@ -2,7 +2,7 @@
 /*###############| DND API |###############*/
 /*#########################################*/
 /*-----| https://www.dnd5eapi.co/api |-----*/
-/*--| https://studio.apollographql.com/ |--*/
+/*---| https://www.dnd5eapi.co/graphql |---*/
 /*#########################################*/
 
 // export async function get_monsters_list() {
@@ -14,26 +14,28 @@
 export async function get_monsters_list() {
   const headers = {
     'content-type': 'application/json',
-    'limit': '400',
   };
-  const graphqlQuery = {
-    'query': `query {
-          monsters {
-            index
-            name
-            alignment
-            type
-            size
-            strength
-            dexterity
-            constitution
-            intelligence
-          }
-        }`,
-  };
+  const graphqlQuery = JSON.stringify({
+    query: `query($limit: Int) {
+      monsters(limit: $limit){
+        index
+        name
+        alignment
+        type
+        size
+        strength
+        dexterity
+        constitution
+        intelligence
+      }
+    }`,
+    variables: {
+      limit: null,
+    },
+  });
 
   // monsters {
-  //   _id
+  //   index
   //   name
   //   alignment
   //   type
@@ -44,14 +46,14 @@ export async function get_monsters_list() {
   //   intelligence
   // }
 
-  const options = {
-    'method': 'POST',
-    'headers': headers,
-    'body': JSON.stringify(graphqlQuery)
+  const params = {
+    method: 'POST',
+    headers: headers,
+    body: graphqlQuery,
   };
   const response = await fetch(
       'https://www.dnd5eapi.co/graphql',
-      options,
+      params,
   );
 
   return response;
