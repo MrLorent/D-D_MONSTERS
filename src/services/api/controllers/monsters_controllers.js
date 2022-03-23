@@ -1,3 +1,9 @@
+/*#########################################*/
+/*###############| DND API |###############*/
+/*#########################################*/
+/*---| https://pixelencounter.com/Api/ |---*/
+/*#########################################*/
+
 import {get_random_monster} from '../models/monsters_models';
 
 export async function get_random_monster_svg() {

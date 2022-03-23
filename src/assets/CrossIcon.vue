@@ -7,7 +7,7 @@
 
 <script>
     export default {
-    name: 'CrossIcon',
+        name: 'CrossIcon',
     }
 </script>
 

@@ -18,6 +18,8 @@
                     <select v-model="monster_sort_type" id="monster_sort">
                         <option value="A-Z_name">Names (A - Z)</option>
                         <option value="Z-A_name">Names (Z - A)</option>
+                        <option value="A-Z_alignment">Alignment (A - Z)</option>
+                        <option value="Z-A_alignment">Alignment (Z - A)</option>
                     </select>
                 </div>
             </div>
@@ -26,7 +28,8 @@
             <MonsterCard
                 v-for="monster in sort_monsters_data"
                 :key="monster.id"
-                :name="monster.name"/>
+                :name="monster.name"
+                :alignment="monster.alignment"/>
         </ul>
     </section>
 </template>
@@ -62,10 +65,11 @@
         },
         computed: {
             sort_monsters_data() {
-                const field = ["A-Z_name", "Z-A_name"].includes(this.monster_sort_type) ? "name" : "other";
-                const reversed = ["Z-A_name"].includes(this.monster_sort_type);
+                const field = ["A-Z_name", "Z-A_name"].includes(this.monster_sort_type) ? "name" : "alignment";
+                const reversed = ["Z-A_name", "Z-A_alignment"].includes(this.monster_sort_type);
                 
-                const filter_func = (a) => a.name.toLowerCase().includes(this.search.toLowerCase());
+                const filter_func = (a) =>
+                    a.name.toLowerCase().includes(this.search.toLowerCase()) || a.alignment.toLowerCase().includes(this.search.toLowerCase());
                 const comparator = (a, b) => a[field].localeCompare(b[field]);
                 
                 let filtered_monsters = this.monsters_data.filter(filter_func);
@@ -179,11 +183,10 @@
         box-sizing: border-box;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
         overflow-y: scroll;
         scroll-behavior: smooth;
         scrollbar-width: none;
-        padding: 2.5%;
+        padding: 15px;
     }
 
     .monsters_list::-webkit-scrollbar
