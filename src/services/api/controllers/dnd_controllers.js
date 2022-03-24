@@ -11,9 +11,5 @@ export async function get_monsters_data() {
   const response = await get_monsters_list();
   const raw_response = await response.json();
 
-  console.log(raw_response);
-
-  let monsters_data = raw_response['data']['monsters'];
-
-  return JSON.parse(JSON.stringify(monsters_data));
+  return raw_response['data']['monsters'];
 }

@@ -1,6 +1,7 @@
 <template>
 	<li class="monster_card">
-		<MonsterPicture/>
+		<div class="picture_container" v-html="picture_svg">
+		</div>
 		<div class="details_container">
 			<h3 class="name">{{ name }}</h3>
 			<p class="alignment">{{ alignment }}</p>
@@ -9,16 +10,12 @@
 </template>
 
 <script>
-	import MonsterPicture from './MonsterPicture.vue';
-	
 	export default {
 		name: 'MonsterCard',
-		components: {
-			MonsterPicture,
-		},
 		props: {
+			picture_svg: { type: String, required: true },
 			name: { type: String, required: true },
-			alignment: { type: String, required: true }
+			alignment: { type: String, required: true },
 		},
 	}
 </script>
@@ -37,6 +34,28 @@
 		position: relative;
 		margin: 10px;
 		transition: 0.5 ease-in;
+	}
+
+	.picture_container
+	{
+		width: 100%;
+		height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+		padding: 20px;
+	}
+
+	>>> .loader_icon {
+        stroke: var(--green);
+        width: 40%;
+        height: 40%;
+    }
+
+	>>> svg
+	{
+		height: 100%;
 	}
 
 	.details_container
