@@ -30,7 +30,7 @@ export async function get_monsters_list() {
       }
     }`,
     variables: {
-      limit: null,
+      limit: 5,
     },
   });
 
