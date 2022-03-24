@@ -107,9 +107,8 @@
             this.retrieve_monsters_data()
         },
         mounted() {
-            this.emitter.on('search_requested', request => {
-                this.search = request;
-            });
+            this.emitter.on('search_requested', request => { this.search = request; });
+            this.emitter.on('sort_requested', sort_type => { this.monster_sort_type = sort_type; });
         },
     }
 </script>

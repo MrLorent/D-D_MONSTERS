@@ -1,7 +1,7 @@
 <template>
   <div class="header_container">
     <HeaderBar/>
-    <OptionsBar ref="options" @sort_requested="transmit_sort_request"/>
+    <OptionsBar/>
   </div>
   <main>
     <MonstersList ref="monsters_list"/>
@@ -19,11 +19,6 @@ export default {
     HeaderBar,
     OptionsBar,
     MonstersList,
-  },
-  methods: {
-    transmit_sort_request(request){
-      this.$refs.monsters_list.sort(request);
-    },
   },
 }
 </script>

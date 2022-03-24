@@ -30,21 +30,9 @@ export async function get_monsters_list() {
       }
     }`,
     variables: {
-      limit: 5,
+      limit: 20,
     },
   });
-
-  // monsters {
-  //   index
-  //   name
-  //   alignment
-  //   type
-  //   size
-  //   strength
-  //   dexterity
-  //   constitution
-  //   intelligence
-  // }
 
   const params = {
     method: 'POST',
