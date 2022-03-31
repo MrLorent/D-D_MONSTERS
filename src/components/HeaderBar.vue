@@ -28,9 +28,14 @@
                 this.emitter.emit('search_requested', this.search);
             },
         },
+        watch: {
+            search: function(new_search) {
+                localStorage.setItem("search", new_search);
+            },
+        },
         data() {
             return {
-                search: "",
+                search: localStorage.getItem("search") || "",
             }
         },
 	}

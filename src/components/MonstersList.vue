@@ -90,11 +90,6 @@
                 monsters_sort_type: localStorage.getItem("monsters_sort_type") || "A-Z_name",
             }
         },
-        watch: {
-            search: function(new_search) {
-                localStorage.setItem("search", new_search);
-            },
-        },
         computed: {
             sort_monsters_data() {
                 const field = ["A-Z_name", "Z-A_name"].includes(this.monsters_sort_type) ? "name" : "alignment";
