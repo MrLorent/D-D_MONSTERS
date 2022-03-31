@@ -77,20 +77,28 @@
                 this.retrieve_monsters_picture();
             },
             sort(request){
-                this.monster_sort_type = request;
+                this.monsters_sort_type = request;
             },
         },
         data() {
             return {
                 monsters_data: [],
-                search: "",
-                monster_sort_type: "A-Z_name",
+                search: localStorage.getItem("search") || "",
+                monsters_sort_type: localStorage.getItem("monsters_sort_type") || "A-Z_name",
             }
+        },
+        watch: {
+            search: function(new_search) {
+                localStorage.setItem("search", new_search);
+            },
+            monsters_sort_type: function(new_monsters_sort_type) {
+                localStorage.setItem("monsters_sort_type", new_monsters_sort_type);
+            },
         },
         computed: {
             sort_monsters_data() {
-                const field = ["A-Z_name", "Z-A_name"].includes(this.monster_sort_type) ? "name" : "alignment";
-                const reversed = ["Z-A_name", "Z-A_alignment"].includes(this.monster_sort_type);
+                const field = ["A-Z_name", "Z-A_name"].includes(this.monsters_sort_type) ? "name" : "alignment";
+                const reversed = ["Z-A_name", "Z-A_alignment"].includes(this.monsters_sort_type);
                 
                 const filter_func = (a) =>
                     a.name.toLowerCase().includes(this.search.toLowerCase()) || a.alignment.toLowerCase().includes(this.search.toLowerCase());
@@ -108,7 +116,7 @@
         },
         mounted() {
             this.emitter.on('search_requested', request => { this.search = request; });
-            this.emitter.on('sort_requested', sort_type => { this.monster_sort_type = sort_type; });
+            this.emitter.on('sort_requested', sort_type => { this.monsters_sort_type = sort_type; });
         },
     }
 </script>
