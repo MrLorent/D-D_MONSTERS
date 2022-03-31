@@ -47,8 +47,28 @@ export async function get_monsters_list() {
   return response;
 }
 
-export async function get_monster_details(id) {
-  const response = await fetch('https://www.dnd5eapi.co/api/monsters/' + id);
+export async function get_monsters_list() {
+  const headers = {
+    'content-type': 'application/json',
+  };
+  const graphqlQuery = JSON.stringify({
+    query: `query() {
+      alignments {
+        name
+      }
+    }`,
+  });
+
+  const params = {
+    method: 'POST',
+    headers: headers,
+    body: graphqlQuery,
+  };
+
+  const response = await fetch(
+      'https://www.dnd5eapi.co/graphql',
+      params,
+  );
 
   return response;
 }
