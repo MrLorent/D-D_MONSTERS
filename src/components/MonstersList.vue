@@ -96,7 +96,7 @@
                 const reversed = ["Z-A_name", "Z-A_alignment"].includes(this.monsters_sort_type);
                 
                 const filter_func = (a) =>
-                    a.name.toLowerCase().includes(this.search.toLowerCase()) || a.alignment.toLowerCase().includes(this.search.toLowerCase());
+                    a.name.toLowerCase().includes(this.search.toLowerCase());
                 const comparator = (a, b) => a[field].localeCompare(b[field]);
                 
                 let filtered_monsters = this.monsters_data.filter(filter_func);
