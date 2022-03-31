@@ -1,5 +1,6 @@
 <template>
     <section id="monsters_gallery">
+        <OptionsBar v-model:monsters_sort_type="monsters_sort_type"/>
         <ul class="monsters_list">
             <MonsterCard
                 v-for="monster in sort_monsters_data"
@@ -48,6 +49,7 @@
             </circle>
         </g>
     </svg>`;
+    import OptionsBar from './OptionsBar.vue';
     import MonsterCard from './MonsterCard.vue';
     import { get_monsters_data } from '../services/api/controllers/dnd_controllers.js';
     import {get_random_monster_svg} from '../services/api/controllers/monsters_controllers.js';
@@ -56,6 +58,7 @@
         name: 'MonstersList',
         components: {
             // COMPONENTS
+            OptionsBar,
             MonsterCard,
         },
         methods: {
@@ -91,9 +94,6 @@
             search: function(new_search) {
                 localStorage.setItem("search", new_search);
             },
-            monsters_sort_type: function(new_monsters_sort_type) {
-                localStorage.setItem("monsters_sort_type", new_monsters_sort_type);
-            },
         },
         computed: {
             sort_monsters_data() {
@@ -127,7 +127,7 @@
         width: 100%;
         box-sizing: border-box;
         position: relative;
-        padding: var(--header-container-height) 0 0 0;
+        padding: var(--header-height) 0 0 0;
     }
 
     .monsters_list {
@@ -139,7 +139,7 @@
         overflow-y: scroll;
         scroll-behavior: smooth;
         scrollbar-width: none;
-        padding: 15px;
+        padding: calc(var(--options-height) + 15px) 15px 15px 15px;
     }
 
     .monsters_list::-webkit-scrollbar

@@ -39,6 +39,7 @@
 <style scoped>
 	header
     {
+        background-color: var(--dark-grey);
         border-bottom: 1px solid var(--light-grey);
         width: 100%;
         height: var(--header-height);
@@ -46,6 +47,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: fixed;
+        top: 0;
+        z-index: 1;
         padding: 0 15px;
     }
 
