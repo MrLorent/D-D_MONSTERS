@@ -7,7 +7,7 @@
             <button class="clear_button" v-if="search" @click="clear_search">
                 <CrossIcon/>
             </button>
-            <input class="search_bar" v-model="search" @change="send_search_request" type="text" name="search" placeholder="Search a monster">
+            <input class="search_bar" v-model="search"  @keyup.enter="send_search_request" type="text" name="search" placeholder="Search a monster">
         </div>
     </header>
 </template>
