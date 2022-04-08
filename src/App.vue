@@ -1,7 +1,7 @@
 <template>
-  <HeaderBar/>
+  <HeaderBar v-model:search="search"/>
   <main>
-    <MonstersList ref="monsters_list"/>
+    <MonstersList :search="search"/>
   </main>
 </template>
 
@@ -17,6 +17,11 @@ export default {
   },
   created() {
     document.title = "D&D MONSTERS"
+  },
+  data() {
+      return {
+          search: localStorage.getItem("search") || "",
+      }
   },
 }
 </script>

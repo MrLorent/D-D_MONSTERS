@@ -69,6 +69,9 @@
             OptionsBar,
             MonsterCard,
         },
+        props: {
+            search: String,
+        },
         methods: {
             async retrieve_monsters_data() {
                 /* Get text content from D&D api*/
@@ -96,7 +99,6 @@
             },
             async retrieve_alignment_classification(){
                 this.alignments_classification = await get_alignments_data();
-                this.retrieve_monsters_data();
             },
         },
         data() {
@@ -104,7 +106,6 @@
                 monsters_data: [],
                 monsters_alignments: [],
                 alignments_classification: {},
-                search: localStorage.getItem("search") || "",
                 monsters_sort_type: localStorage.getItem("monsters_sort_type") || "A-Z_name",
             }
         },
@@ -126,10 +127,7 @@
         },
         created: function() {
             this.retrieve_alignment_classification();
-        },
-        mounted() {
-            this.emitter.on('search_requested', request => { this.search = request; });
-            this.emitter.on('sort_requested', sort_type => { this.monsters_sort_type = sort_type; });
+            this.retrieve_monsters_data();
         },
     }
 </script>

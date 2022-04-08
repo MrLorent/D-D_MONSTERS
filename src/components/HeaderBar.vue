@@ -8,7 +8,7 @@
             <button class="clear_button" v-if="search" @click="clear_search">
                 <CrossIcon/>
             </button>
-            <input class="search_bar" v-model="search"  @keyup.enter="send_search_request" type="text" name="search" placeholder="Search a monster">
+            <input class="search_bar" :value="search"  @keyup.enter="on_search_changed" type="text" name="search" placeholder="Search a monster">
         </div>
     </header>
 </template>
@@ -21,23 +21,21 @@
         components: {
             CrossIcon
         },
+        props: {
+            search: String,
+        },
         methods: {
             clear_search() {
-                this.search = "";
+                this.$emit('update:search', "");
             },
-            send_search_request(){
-                this.emitter.emit('search_requested', this.search);
-            },
+            on_search_changed(event){
+                this.$emit('update:search', event.target.value);
+            }
         },
         watch: {
             search: function(new_search) {
                 localStorage.setItem("search", new_search);
             },
-        },
-        data() {
-            return {
-                search: localStorage.getItem("search") || "",
-            }
         },
 	}
 </script>

@@ -18,15 +18,15 @@
         props: {
             monsters_sort_type: String,
         },
-        watch: {
-            monsters_sort_type(new_monsters_sort_type) {
-                localStorage.setItem("monsters_sort_type", new_monsters_sort_type);
-            },
-        },
         methods: {
             on_monsters_sort_type_changed(event){
                 this.$emit('update:monsters_sort_type', event.target.value);
             }
+        },
+        watch: {
+            monsters_sort_type(new_monsters_sort_type) {
+                localStorage.setItem("monsters_sort_type", new_monsters_sort_type);
+            },
         },
 	}
 </script>
