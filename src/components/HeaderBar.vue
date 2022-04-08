@@ -1,6 +1,7 @@
 <template>
 	<header>
         <div class="logo_container">
+            <img src="../assets/logo.png" alt="D&D Monsters logo">
             <h1>D&D MONSTERS</h1>
         </div>
         <div class="search_container">
@@ -64,6 +65,12 @@
         height: 100%;
         display: flex;
         align-items: center;
+    }
+
+    .logo_container img
+    {
+        height: 50%;
+        padding: 0 15px 0 0;
     }
 
     .clear_button

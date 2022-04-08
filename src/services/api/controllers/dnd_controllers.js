@@ -41,7 +41,7 @@ export async function get_alignments_data() {
         (min_color.b + i * b_step) + ')';
   }
 
-  // 247, 47, 133 //PINK 128, 255, 219 // LIGHT BLUE
+  // SPECIAL CASES
   alignments_colors['any alignment'] = 'rgb(6, 255, 140)';            // GREEN
   alignments_colors['any non-lawful alignment'] = 'rgb(255,255,60)';  // YELLOW
   alignments_colors['any non-good alignment'] = 'rgb(251, 133, 40)';  // ORANGE
@@ -50,6 +50,6 @@ export async function get_alignments_data() {
   alignments_colors['any evil alignment'] = 'rgb(208, 0, 0)';      // RED
   alignments_colors['any chaotic alignment'] = 'rgb(180, 5, 10)';  // DARK RED
   alignments_colors['unaligned'] = 'rgb(64, 255, 245)';            // LIGTH BLUE
-  console.log(alignments_colors);
+
   return alignments_colors;
 }
