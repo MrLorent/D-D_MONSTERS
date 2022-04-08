@@ -3,11 +3,19 @@
         <OptionsBar v-model:monsters_sort_type="monsters_sort_type"/>
         <ul class="monsters_list">
             <MonsterCard
-                v-for="monster in sort_monsters_data"
-                :key="monster.index"
-                :picture_svg="monster.picture_svg"
-                :name="monster.name"
-                :alignment="monster.alignment"/>
+                v-for = "monster in sort_monsters_data"
+                :key = "monster.index"
+                :color = "monster.color"
+                :picture_svg = "monster.picture_svg"
+                :name = "monster.name"
+                :alignment = "monster.alignment"
+                :type = "monster.type"
+                :size = "monster.size"
+                :strength = "monster.strength"
+                :dexterity = "monster.dexterity"
+                :constitution = "monster.constitution"
+                :intelligence = "monster.intelligence"
+            />
         </ul>
     </section>
 </template>
@@ -51,8 +59,8 @@
     </svg>`;
     import OptionsBar from './OptionsBar.vue';
     import MonsterCard from './MonsterCard.vue';
-    import { get_monsters_data } from '../services/api/controllers/dnd_controllers.js';
-    import {get_random_monster_svg} from '../services/api/controllers/monsters_controllers.js';
+    import { get_monsters_data, get_alignments_data } from '../services/api/controllers/dnd_controllers.js';
+    import { get_random_monster_svg } from '../services/api/controllers/monsters_controllers.js';
 
     export default {
         name: 'MonstersList',
@@ -62,30 +70,40 @@
             MonsterCard,
         },
         methods: {
-            retrieve_monsters_picture() {
-                this.monsters_data.map(async (element) => {
-                    /* Get picture content from Pixel encounter monster api*/
-                    element['picture_svg'] = await get_random_monster_svg();
-                });
-            },
             async retrieve_monsters_data() {
                 /* Get text content from D&D api*/
                 this.monsters_data = await get_monsters_data();
                 
                 /* Set the monsters picture to the loader by default */
                 this.monsters_data.map(element => {
+                    element['color'] = this.alignments_classification[(element.alignment).toLowerCase().split(" ").join("_")];
                     element['picture_svg'] = loader_icon;
+                    
+                    /* Get all the alignements of the monsters */
+                    if(!this.monsters_alignments.includes(element['alignment'])) {
+                        this.monsters_alignments.push(element['alignment']);
+                    }
                 });
+                
                 /* Get the actual real pictures for the monster*/
                 this.retrieve_monsters_picture();
             },
-            sort(request){
-                this.monsters_sort_type = request;
+            retrieve_monsters_picture() {
+                this.monsters_data.map(async (element) => {
+                    /* Get picture content from Pixel encounter monster api */
+                    element['picture_svg'] = await get_random_monster_svg();
+                });
+            },
+            async retrieve_alignment_classification(){
+                this.alignments_classification = await get_alignments_data();
+                this.retrieve_monsters_data();
             },
         },
         data() {
             return {
                 monsters_data: [],
+                monsters_alignments: [],
+                alignments_classification: {},
                 search: localStorage.getItem("search") || "",
                 monsters_sort_type: localStorage.getItem("monsters_sort_type") || "A-Z_name",
             }
@@ -107,7 +125,7 @@
             } 
         },
         created: function() {
-            this.retrieve_monsters_data()
+            this.retrieve_alignment_classification();
         },
         mounted() {
             this.emitter.on('search_requested', request => { this.search = request; });

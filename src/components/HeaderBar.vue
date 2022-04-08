@@ -96,6 +96,6 @@
 
     .search_bar:focus {
         outline: none;
-        border: 1px solid var(--green);
+        border: 1px solid var(--light-blue);
     }
 </style>

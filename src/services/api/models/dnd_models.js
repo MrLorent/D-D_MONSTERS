@@ -47,12 +47,12 @@ export async function get_monsters_list() {
   return response;
 }
 
-export async function get_monsters_list() {
+export async function get_alignments_list() {
   const headers = {
     'content-type': 'application/json',
   };
   const graphqlQuery = JSON.stringify({
-    query: `query() {
+    query: `query {
       alignments {
         name
       }
