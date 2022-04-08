@@ -15,6 +15,9 @@ export default {
     HeaderBar,
     MonstersList,
   },
+  created() {
+    document.title = "D&D MONSTERS"
+  },
 }
 </script>
 
