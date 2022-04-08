@@ -119,12 +119,12 @@
             sort_monsters_data() {
                 const field = this.monsters_sort_type;
                 const reversed = this.reversed === "on" ? -1 : 1;
-                
+
                 const filter_func = (a) =>
                     a.name.toLowerCase().includes(this.search.toLowerCase());
                 const string_comparator = (a, b) => a[field].localeCompare(b[field]) * reversed;
                 const number_comparator = (a, b) => (b[field] - a[field]) * reversed < 0;
-                const comparator = ['name','alignement'].includes(field) ? string_comparator : number_comparator;
+                const comparator = ['name','alignment'].includes(field) ? string_comparator : number_comparator;
                 
                 return this.monsters_data
                     .filter(filter_func)
