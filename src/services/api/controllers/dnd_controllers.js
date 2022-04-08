@@ -15,31 +15,41 @@ export async function get_monsters_data() {
 }
 
 export async function get_alignments_data() {
-  const colors = [
-    '#7400B8',
-    '#6930C3',
-    '#5E60CE',
-    '#5390D9',
-    '#4EA8DE',
-    '#48BFE3',
-    '#56CFE1',
-    '#64DFDF',
-    '#72EFDD',
-    '#80FFDB',
-  ];
+  const min_color = {
+    r: 116,
+    g: 0,
+    b: 184,
+  };
+  const max_color = {
+    r: 247,
+    g: 47,
+    b: 133,
+  };
+
   const response = await get_alignments_list();
   const raw_response = await response.json();
   const alignments = raw_response['data']['alignments'];
 
   let alignments_colors = {};
-  let count = 0;
-  alignments.map(element => {
-    alignments_colors[element.name.toLowerCase().split(' ').join('_')] =
-        colors[count];
-    count++;
-  });
+  const r_step = parseInt((max_color.r - min_color.r) / alignments.length);
+  const g_step = parseInt((max_color.g - min_color.g) / alignments.length);
+  const b_step = parseInt((max_color.b - min_color.b) / alignments.length);
 
-  alignments_colors['any_alignment'] = '#f72585';  // PINK
+  for (let i = 0; i < alignments.length; i++) {
+    alignments_colors[alignments[i].name.toLowerCase()] = 'rgb(' +
+        (min_color.r + i * r_step) + ',' + (min_color.g + i * g_step) + ',' +
+        (min_color.b + i * b_step) + ')';
+  }
 
+  // 247, 47, 133 //PINK 128, 255, 219 // LIGHT BLUE
+  alignments_colors['any alignment'] = 'rgb(6, 255, 140)';            // GREEN
+  alignments_colors['any non-lawful alignment'] = 'rgb(255,255,60)';  // YELLOW
+  alignments_colors['any non-good alignment'] = 'rgb(251, 133, 40)';  // ORANGE
+  alignments_colors['neutral good (50%) or neutral evil (50%)'] =
+      'rgb(0, 180, 216)';                                          // BLUE
+  alignments_colors['any evil alignment'] = 'rgb(208, 0, 0)';      // RED
+  alignments_colors['any chaotic alignment'] = 'rgb(180, 5, 10)';  // DARK RED
+  alignments_colors['unaligned'] = 'rgb(64, 255, 245)';            // LIGTH BLUE
+  console.log(alignments_colors);
   return alignments_colors;
 }

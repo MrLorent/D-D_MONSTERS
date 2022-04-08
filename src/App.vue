@@ -27,7 +27,9 @@ export default {
     --dark-grey: #202020;
     --light-grey: #323232;
 
-    --light-blue: #80FFDB;
+    --purple: #7400B8;
+    --pink: #f72585;
+    --light-blue: #40fff5;
 
     --discret-font-color: #838383;
     --white: #ffffff;

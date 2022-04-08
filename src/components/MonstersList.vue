@@ -76,7 +76,7 @@
                 
                 /* Set the monsters picture to the loader by default */
                 this.monsters_data.map(element => {
-                    element['color'] = this.alignments_classification[(element.alignment).toLowerCase().split(" ").join("_")];
+                    element['color'] = this.alignments_classification[(element.alignment).toLowerCase()];
                     element['picture_svg'] = loader_icon;
                     
                     /* Get all the alignements of the monsters */

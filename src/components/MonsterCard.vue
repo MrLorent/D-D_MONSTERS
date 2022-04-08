@@ -72,7 +72,7 @@
 	}
 
 	>>> .loader_icon {
-        stroke: var(--green);
+        stroke: var(--light-blue);
         width: 40%;
         height: 40%;
     }
@@ -95,6 +95,7 @@
 	.details_container
 	{
 		background-color: var(--light-grey);
+		font-weight: bold;
 		width: 100%;
 		height: 100%;
 		box-sizing: border-box;
@@ -157,6 +158,5 @@
 	.label
 	{
 		color: var(--white);
-		font-weight: bold;
 	}
 </style>
