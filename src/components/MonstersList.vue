@@ -1,6 +1,9 @@
 <template>
     <section id="monsters_gallery">
-        <OptionsBar v-model:monsters_sort_type="monsters_sort_type"/>
+        <OptionsBar
+            v-model:monsters_sort_type="monsters_sort_type"
+            v-model:reversed="reversed"
+        />
         <ul class="monsters_list">
             <MonsterCard
                 v-for = "monster in sort_monsters_data"
@@ -106,23 +109,26 @@
                 monsters_data: [],
                 monsters_alignments: [],
                 alignments_classification: {},
-                monsters_sort_type: localStorage.getItem("monsters_sort_type") || "A-Z_name",
+
+                // SORTING PARAMETERS
+                monsters_sort_type: localStorage.getItem("monsters_sort_type") || "name",
+                reversed: localStorage.getItem("reversed") || "off",
             }
         },
         computed: {
             sort_monsters_data() {
-                const field = ["A-Z_name", "Z-A_name"].includes(this.monsters_sort_type) ? "name" : "alignment";
-                const reversed = ["Z-A_name", "Z-A_alignment"].includes(this.monsters_sort_type);
+                const field = this.monsters_sort_type;
+                const reversed = this.reversed === "on" ? -1 : 1;
                 
                 const filter_func = (a) =>
                     a.name.toLowerCase().includes(this.search.toLowerCase());
-                const comparator = (a, b) => a[field].localeCompare(b[field]);
+                const string_comparator = (a, b) => a[field].localeCompare(b[field]) * reversed;
+                const number_comparator = (a, b) => (b[field] - a[field]) * reversed < 0;
+                const comparator = ['name','alignement'].includes(field) ? string_comparator : number_comparator;
                 
-                let filtered_monsters = this.monsters_data.filter(filter_func);
-                let sorted_monsters = filtered_monsters.sort(comparator);
-                if (reversed) sorted_monsters = sorted_monsters.reverse()
-                
-                return sorted_monsters;
+                return this.monsters_data
+                    .filter(filter_func)
+                    .sort(comparator);
             } 
         },
         created: function() {
