@@ -1,5 +1,5 @@
 <template>
-	<li class="monster_card" :style="monster_color">
+	<div class="monster_card" :style="monster_color">
 		<div class="picture_container" v-html="picture_svg">
 		</div>
 		<div class="details_container">
@@ -16,7 +16,7 @@
 				<p class="stat intelligence"><span class="label">Intelligence : </span>{{ intelligence }}</p>
 			</div>
 		</div>
-	</li>
+	</div>
 </template>
 
 <script>

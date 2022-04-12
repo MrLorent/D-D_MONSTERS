@@ -4,7 +4,10 @@
             v-model:monsters_sort_type="monsters_sort_type"
             v-model:reversed="reversed"
         />
-        <ul class="monsters_list">
+        <div class="monsters_list">
+            <div class="404" v-if="sort_monsters_data.length === 0">
+                <p>NO RESULT FIND :/</p>
+            </div>
             <MonsterCard
                 v-for = "monster in sort_monsters_data"
                 :key = "monster.index"
@@ -19,7 +22,7 @@
                 :constitution = "monster.constitution"
                 :intelligence = "monster.intelligence"
             />
-        </ul>
+        </div>
     </section>
 </template>
 
