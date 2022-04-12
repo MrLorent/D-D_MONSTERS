@@ -7,8 +7,8 @@
 
 import {get_alignments_list, get_monsters_list} from '../models/dnd_models.js';
 
-export async function get_monsters_data() {
-  const response = await get_monsters_list();
+export async function get_monsters_data(rank, limit) {
+  const response = await get_monsters_list(rank, limit);
   const raw_response = await response.json();
 
   return raw_response['data']['monsters'];

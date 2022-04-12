@@ -11,13 +11,13 @@
 //   return response;
 // }
 
-export async function get_monsters_list() {
+export async function get_monsters_list(rank, limit) {
   const headers = {
     'content-type': 'application/json',
   };
   const graphqlQuery = JSON.stringify({
-    query: `query($limit: Int) {
-      monsters(limit: $limit){
+    query: `query($skip: Int, $limit: Int) {
+      monsters(skip: $skip, limit: $limit){
         index
         name
         alignment
@@ -30,7 +30,8 @@ export async function get_monsters_list() {
       }
     }`,
     variables: {
-      limit: 20,
+      skip: rank * limit,
+      limit: limit,
     },
   });
 

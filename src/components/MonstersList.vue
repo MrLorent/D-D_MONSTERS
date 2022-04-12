@@ -7,7 +7,7 @@
         <div class="monsters_list">
             <div class="error_404" v-if="sort_monsters_data.length === 0">
                 <p class="visual">¯\_(ツ)_/¯</p>
-                <p class="text">Sorry, no monster matches your research... :/</p>
+                <p class="text">Sorry, no monster matches your research...</p>
             </div>
             <MonsterCard
                 v-for = "monster in sort_monsters_data"
@@ -23,6 +23,7 @@
                 :constitution = "monster.constitution"
                 :intelligence = "monster.intelligence"
             />
+            <button @click="get_more_monsters_data">MORE</button>
         </div>
     </section>
 </template>
@@ -80,29 +81,28 @@
             search: String,
         },
         methods: {
-            async retrieve_monsters_data() {
+            async get_monsters_data(monster_rank, number_of_monsters) {
                 /* Get text content from D&D api*/
-                this.monsters_data = await get_monsters_data();
+                this.monsters_loaded = await get_monsters_data(monster_rank, number_of_monsters);
                 
                 /* Set the monsters picture to the loader by default */
-                this.monsters_data.map(element => {
+                this.monsters_loaded.map(async element => {
                     element['color'] = this.alignments_classification[(element.alignment).toLowerCase()];
                     element['picture_svg'] = loader_icon;
+                    /* Get picture content from Pixel encounter monster api */
+                    element['picture_svg'] = await get_random_monster_svg();
                     
                     /* Get all the alignements of the monsters */
                     if(!this.monsters_alignments.includes(element['alignment'])) {
                         this.monsters_alignments.push(element['alignment']);
                     }
                 });
-                
-                /* Get the actual real pictures for the monster*/
-                this.retrieve_monsters_picture();
+
+                this.monsters_data = this.monsters_data.concat(this.monsters_loaded);
             },
-            retrieve_monsters_picture() {
-                this.monsters_data.map(async (element) => {
-                    /* Get picture content from Pixel encounter monster api */
-                    element['picture_svg'] = await get_random_monster_svg();
-                });
+            async get_more_monsters_data() {
+                this.monster_rank++;
+                this.get_monsters_data(this.monster_rank, 20);
             },
             async retrieve_alignment_classification(){
                 this.alignments_classification = await get_alignments_data();
@@ -110,7 +110,9 @@
         },
         data() {
             return {
+                monsters_loaded: [],
                 monsters_data: [],
+                monster_rank: 0,
                 monsters_alignments: [],
                 alignments_classification: {},
 
@@ -137,7 +139,8 @@
         },
         created: function() {
             this.retrieve_alignment_classification();
-            this.retrieve_monsters_data();
+            this.get_monsters_data(this.monster_rank, 40);
+            this.monster_rank = 1;
         },
     }
 </script>
