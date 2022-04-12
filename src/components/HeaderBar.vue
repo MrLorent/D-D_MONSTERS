@@ -65,6 +65,11 @@
         align-items: center;
     }
 
+    .logo_container h1
+    {
+        letter-spacing: 0.025em;
+    }
+
     .logo_container img
     {
         height: 50%;

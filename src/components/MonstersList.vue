@@ -5,8 +5,9 @@
             v-model:reversed="reversed"
         />
         <div class="monsters_list">
-            <div class="404" v-if="sort_monsters_data.length === 0">
-                <p>NO RESULT FIND :/</p>
+            <div class="error_404" v-if="sort_monsters_data.length === 0">
+                <p class="visual">¯\_(ツ)_/¯</p>
+                <p class="text">Sorry, no monster matches your research... :/</p>
             </div>
             <MonsterCard
                 v-for = "monster in sort_monsters_data"
@@ -165,5 +166,28 @@
     .monsters_list::-webkit-scrollbar
     {
         width: 0;
+    }
+
+    .error_404
+    {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .error_404 .visual
+    {
+        color: var(--light-blue);
+        font-size: 5em;
+        margin: 10% 0 2.5% 0;
+    }
+
+    .error_404 .text
+    {
+        font-size: 1.5em;
+        font-weight: 500;
+        letter-spacing: 0.025em;
     }
 </style>
