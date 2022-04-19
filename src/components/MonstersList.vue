@@ -135,9 +135,10 @@
                     .sort(comparator);
             } 
         },
-        created: function() {
-            this.retrieve_alignment_classification();
-            this.retrieve_monsters_data();
+        created() {
+            this.retrieve_alignment_classification().then(() => {
+                this.retrieve_monsters_data();
+            });
         },
     }
 </script>
