@@ -89,6 +89,7 @@
                 this.monsters_loaded.map(async element => {
                     element['color'] = this.alignments_classification[(element.alignment).toLowerCase()];
                     element['picture_svg'] = loader_icon;
+                    
                     /* Get picture content from Pixel encounter monster api */
                     element['picture_svg'] = await get_random_monster_svg();
                     
@@ -101,8 +102,8 @@
                 this.monsters_data = this.monsters_data.concat(this.monsters_loaded);
             },
             async get_more_monsters_data() {
-                this.monster_rank++;
                 this.get_monsters_data(this.monster_rank, 20);
+                this.monster_rank++;
             },
             async retrieve_alignment_classification(){
                 this.alignments_classification = await get_alignments_data();
@@ -138,9 +139,10 @@
             } 
         },
         created: function() {
-            this.retrieve_alignment_classification();
-            this.get_monsters_data(this.monster_rank, 40);
-            this.monster_rank = 1;
+            this.retrieve_alignment_classification().then(() => {
+                this.get_monsters_data(this.monster_rank, 40);
+                this.monster_rank = 2;
+            });
         },
     }
 </script>
