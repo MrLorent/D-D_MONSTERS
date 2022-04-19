@@ -87,6 +87,7 @@
                 /* Set the monsters picture to the loader by default */
                 this.monsters_data.map(element => {
                     element['color'] = this.alignments_classification[(element.alignment).toLowerCase()];
+                    element['picture_loaded'] = false;
                     element['picture_svg'] = loader_icon;
                     
                     /* Get all the alignements of the monsters */
@@ -96,13 +97,36 @@
                 });
                 
                 /* Get the actual real pictures for the monster*/
-                this.retrieve_monsters_picture();
+                this.retrieve_first_monsters_pictures();
+            },
+            async retrieve_first_monsters_pictures() {
+                // for(let i=0; i<this.monsters_by_page; i++) {
+                //     await this.retrieve_monster_picture(i);
+                // }
+                this.monsters_data.map(async (monster) => {
+                    monster['picture_svg'] = await get_random_monster_svg();
+                });
+            },
+            async retrieve_monster_picture(INDEX) {
+                this.monsters_data[INDEX]['picture_svg'] = await get_random_monster_svg();
             },
             retrieve_monsters_picture() {
-                this.monsters_data.map(async (element) => {
+                const MIN_RANK = (this.monsters_page_index === 0 ? 0 : (this.monsters_page_index - 1));
+                const DELTA = (this.monsters_page_index === 0 ? (this.monsters_by_page * 2) : (this.monsters_by_page * 3))
+                const MIN = this.monsters_by_page * MIN_RANK;
+                const MAX = MIN + DELTA;
+                
+                const load_pictures = async (index) => {
                     /* Get picture content from Pixel encounter monster api */
-                    element['picture_svg'] = await get_random_monster_svg();
-                });
+                    this.monsters_data[index]['picture_svg'] = await get_random_monster_svg();
+                    this.monsters_data[index]['picture_loaded'] = true;
+                }
+
+                for(let i = MIN; i < MAX; i++) {
+                    const INDEX = (MIN_RANK === 0 ? i : ((i + this.monsters_by_page)%DELTA));
+
+                    if(!this.monsters_data[INDEX]['picture_loaded']) load_pictures(INDEX);
+                }
             },
             async retrieve_alignment_classification(){
                 this.alignments_classification = await get_alignments_data();
@@ -111,8 +135,10 @@
         data() {
             return {
                 monsters_data: [],
+                monsters_page_index: 0,
+                monsters_by_page: 10,
                 monsters_alignments: [],
-                alignments_classification: {},
+                alignments_classification: [],
 
                 // SORTING PARAMETERS
                 monsters_sort_type: localStorage.getItem("monsters_sort_type") || "name",
@@ -132,7 +158,8 @@
                 
                 return this.monsters_data
                     .filter(filter_func)
-                    .sort(comparator);
+                    .sort(comparator)
+                    //.slice(this.monsters_page_index * this.monsters_by_page, (this.monsters_page_index + 1) * this.monsters_by_page);
             } 
         },
         created() {
